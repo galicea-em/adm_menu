@@ -1,0 +1,47 @@
+System (Debian/Ubuntu):
+pip3 install ssh_agent_setup
+sudo apt install  expect
+
+
+1. Starting ssh-agent.
+Add:
+
+eval `ssh-agent -s`
+
+to the file  ~/.bashrc
+
+Logout and login again.
+
+2. Key generation for PGP.
+
+mkdir ~/.gnupg
+gpg --gen-key
+
+verify:
+gpg --list-keys
+
+3. Configure inicerts.py
+Set the RECIPIENT variable to the email provided in keys generating process.
+
+4. Create SSH certificate. For example:
+
+ssh-keygen -t rsa -b 4096  -f ~/.ssh/cert2jw
+ssh-copy-id -i ~/.ssh/cert2jw.pub jurek@10.0.0.4
+
+verify:
+ssh -i ~/.ssh/cert2jw jurek@10.0.0.4
+
+5. Store password:
+./inicerts.py -a cert2jw -p mypassword
+
+6. Tests:
+ssh-add -D
+ssh-add -L
+./inicerts.py -i
+ssh-add -L
+
+verify:
+
+ssh -i  ~/.ssh/cert2jw 10.0.0.4
+
+(should login without asking for a password)

@@ -1,0 +1,4 @@
+[inicerts]
+
+RECIPIENT=user@example.com
+STORE_PATH=admin/.password-store
